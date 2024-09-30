@@ -4,7 +4,7 @@ from pygame.examples.sprite_texture import event
 
 open_canvas()
 ground = load_image('TUK_GROUND.png')
-character = load_image('standmiku1.png') #가만히 서있는거
+character = load_image('standmiku1.png') #가만히 서있는거 기본
 
 Right = True
 Left = False
@@ -90,7 +90,6 @@ def updownCha():
     global frame,dirUD,Right,Left,tempWidth
 
     print("위아래")
-
     if (dirUD == 1):
         if(Right):
             character = load_image('jmRmiku.png')
@@ -113,9 +112,6 @@ def updownCha():
             else: tempWidth = 0
             character.clip_draw((frame * 84) + tempWidth, 0, 84 + tempWidth, 67, x, y, 124, 105)
         if(Left):
-            print(frame, tempWidth)
-            #frame = 6
-            print((frame * 79) + tempWidth, 79 + tempWidth)
             character = load_image('downLMiku.png')
             if (frame > 2):
                 tempWidth = 6  # frame 2부터는 그림 가로 길이가 조금 더 길어져서 프레임에 맞게...
