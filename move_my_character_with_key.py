@@ -1,4 +1,5 @@
 from pico2d import *
+from pygame.examples.scroll import DIR_UP
 
 open_canvas()
 ground = load_image('TUK_GROUND.png')
@@ -7,7 +8,7 @@ character = load_image('standmiku1.png') #가만히 서있는거
 def handle_events():
     global running
 
-    global dirRL
+    global dirRL,dirUD
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -20,17 +21,26 @@ def handle_events():
                 dirRL -= 1
             elif event.key == SDLK_ESCAPE:
                 running = False
+            elif event.key == SDLK_UP:
+                dirUD +=1
+            elif event.key == SDLK_DOWN:
+                dirUD -=1
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_RIGHT:
                 dirRL -=1
             if event.key ==SDLK_LEFT:
                 dirRL +=1
+            elif event.key == SDLK_UP:
+                dirUD -=1
+            elif event.key == SDLK_DOWN:
+                dirUD +=1
 
 
 running = True
 x = 800 // 2
 frame = 0
-dirRL =0
+dirRL = 0
+dirUD = 0
 
 standFrame = 20
 runFrame = 8
@@ -46,8 +56,10 @@ def standCha(): #가만히 서있을 때 함수
 while running:
     clear_canvas()
     ground.draw(400,300,800,600)
+    print("UPDOWN 확인:",dirUD)
+    print("RIGHTLEFT 확인:", dirRL)
 
-    standCha()
+    #standCha()
     # 가만히 서있을 때
     # ~~
 
