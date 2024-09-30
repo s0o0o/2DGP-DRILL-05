@@ -18,8 +18,12 @@ def handle_events():
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RIGHT:
                 dirRL = 1
+                Right = True
+                Left = False
             elif event.key == SDLK_LEFT:
                 dirRL = -1
+                Left = True
+                Right = False
             elif event.key == SDLK_ESCAPE:
                 running = False
             elif event.key == SDLK_UP:
@@ -38,6 +42,8 @@ def handle_events():
 
 
 running = True
+Right = True
+Left = False
 x = 80
 y = 500
 frame = 0
@@ -89,7 +95,6 @@ def updownCha():
         frame = (frame + 1) % downFrame
 
 
-
 while running:
     clear_canvas()
     ground.draw(400,300,800,600)
@@ -100,29 +105,25 @@ while running:
     # 가만히 서있을 때
     if(dirUD == 0 and dirRL == 0):
         standCha()
-
     # 달릴 때
     elif (dirRL == 1): # 오른쪽
         runCha()
     elif (dirRL == -1):  # 왼쪽
         runCha()
-    # ~~
-
     # 아래로 갈 때
     elif(dirUD==1):
         updownCha()
-    # ~~
-
     # 위로 갈 때
     elif (dirUD == -1):
         updownCha()
-    # ~~
 
     update_canvas()
     handle_events()
 
     x += dirRL*15
-    y+=dirUD*10
+    y += dirUD*8
+    if(x>780 or x < 0 or y > 580 or y< 0):
+        running = False
     delay(0.03)
 
 close_canvas()
