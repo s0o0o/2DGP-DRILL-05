@@ -1,5 +1,6 @@
 from pico2d import *
 from pygame.examples.scroll import DIR_UP
+from pygame.examples.sprite_texture import event
 
 open_canvas()
 ground = load_image('TUK_GROUND.png')
@@ -37,7 +38,8 @@ def handle_events():
 
 
 running = True
-x = 800 // 2
+x = 80
+y = 150
 frame = 0
 dirRL = 0
 dirUD = 0
@@ -50,20 +52,38 @@ def standCha(): #가만히 서있을 때 함수
 
     print("stand")
     character = load_image('standmiku1.png')  # 가만히 서있는거
-    character.clip_draw(frame * 59, 0, 59, 67, x, 90)
+    character.clip_draw(frame * 59, 0, 59, 67, x, y,100,110)
     frame = (frame + 1) % standFrame
+    
+def runCha(): # 달릴때 오른쪽 함수
+    global frame,dirRL
+
+    print("run")
+    if(dirRL == 1):
+        character = load_image('runRmiku.png')  # 달리는거 오른쪽
+        character.clip_draw(frame * 78, 0, 78, 67, x, y, 120, 110)  # 오른쪽
+    elif(dirRL== -1):
+        character = load_image('runLmiku.png')  # 달리는거 왼쪽
+        character.clip_draw(frame * 78, 0, 78, 67, x, y, 120, 110)  # 왼쪽
+
+    frame = (frame + 1) % runFrame
 
 while running:
     clear_canvas()
     ground.draw(400,300,800,600)
+    
     print("UPDOWN 확인:",dirUD)
     print("RIGHTLEFT 확인:", dirRL)
 
-    #standCha()
     # 가만히 서있을 때
-    # ~~
+    if(dirUD == 0 and dirRL == 0):
+        standCha()
 
     # 달릴 때
+    elif (dirRL == 1): # 오른쪽
+        runCha()
+    elif (dirRL == -1):  # 왼쪽
+        runCha()
     # ~~
 
     # 아래로 갈 때
@@ -76,6 +96,6 @@ while running:
     handle_events()
 
     x += dirRL*15
-    delay(0.05)
+    delay(0.03)
 
 close_canvas()
