@@ -17,29 +17,29 @@ def handle_events():
         # fill here
         elif event.type == SDL_KEYDOWN:
             if event.key == SDLK_RIGHT:
-                dirRL += 1
+                dirRL = 1
             elif event.key == SDLK_LEFT:
-                dirRL -= 1
+                dirRL = -1
             elif event.key == SDLK_ESCAPE:
                 running = False
             elif event.key == SDLK_UP:
-                dirUD +=1
+                dirUD =1
             elif event.key == SDLK_DOWN:
-                dirUD -=1
+                dirUD =-1
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_RIGHT:
-                dirRL -=1
+                dirRL =0
             if event.key ==SDLK_LEFT:
-                dirRL +=1
+                dirRL =0
             elif event.key == SDLK_UP:
-                dirUD -=1
+                dirUD =0
             elif event.key == SDLK_DOWN:
-                dirUD +=1
+                dirUD =0
 
 
 running = True
 x = 80
-y = 150
+y = 500
 frame = 0
 dirRL = 0
 dirUD = 0
@@ -47,6 +47,7 @@ dirUD = 0
 standFrame = 20
 runFrame = 8
 jmFrame = 9
+downFrame = 8
 
 def standCha(): #가만히 서있을 때 함수
     global frame
@@ -71,14 +72,23 @@ def runCha(): # 달릴때 함수
 
 def updownCha():
     global frame,dirUD
-
+    tempWidth = 0
     print("위아래")
 
     if (dirUD == 1):
         character = load_image('jmRmiku.png')
-        character.clip_draw(frame * 79, 0, 79, 101, x, y, 120, 140)
+        character.clip_draw(frame * 78, 0, 78, 101, x, y, 120, 140)
+        frame = (frame + 1) % jmFrame
+    elif(dirUD== -1):
+        character = load_image('downRMiku.png')
+        if(frame > 2):
+            tempWidth = 3 # frame 3부터는 그림 가로 길이가 조금 더 길어져서 프레임에 맞게...
+        else: tempWidth = 0
+        character.clip_draw((frame * 84) + tempWidth, 0, 84 + tempWidth, 67, x, y, 122, 105)
 
-    frame = (frame + 1) % jmFrame
+        frame = (frame + 1) % downFrame
+
+
 
 while running:
     clear_canvas()
