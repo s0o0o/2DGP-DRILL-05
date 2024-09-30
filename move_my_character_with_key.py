@@ -6,8 +6,11 @@ open_canvas()
 ground = load_image('TUK_GROUND.png')
 character = load_image('standmiku1.png') #가만히 서있는거
 
+Right = True
+Left = False
+
 def handle_events():
-    global running
+    global running,Right,Left
 
     global dirRL,dirUD
     events = get_events()
@@ -42,8 +45,7 @@ def handle_events():
 
 
 running = True
-Right = True
-Left = False
+
 x = 80
 y = 500
 frame = 0
@@ -56,11 +58,16 @@ jmFrame = 9
 downFrame = 8
 
 def standCha(): #가만히 서있을 때 함수
-    global frame
+    global frame, Right, Left
 
-    print("stand")
-    character = load_image('standmiku1.png')  # 가만히 서있는거
-    character.clip_draw(frame * 59, 0, 59, 67, x, y,100,110)
+    if(Right):
+        print("right였음")
+        character = load_image('standmiku1.png')  # 가만히 서있는거 오른쪽
+        character.clip_draw(frame * 59, 0, 59, 67, x, y,100,110)
+    elif(Left):
+        print("left였음")
+        character = load_image('standLmiku1.png')  # 가만히 서있는거 왼쪽
+        character.clip_draw(frame * 59, 0, 59, 67, x, y, 100, 110)
     frame = (frame + 1) % standFrame
     
 def runCha(): # 달릴때 함수
