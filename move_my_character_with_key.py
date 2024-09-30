@@ -46,6 +46,7 @@ dirUD = 0
 
 standFrame = 20
 runFrame = 8
+jmFrame = 9
 
 def standCha(): #가만히 서있을 때 함수
     global frame
@@ -55,7 +56,7 @@ def standCha(): #가만히 서있을 때 함수
     character.clip_draw(frame * 59, 0, 59, 67, x, y,100,110)
     frame = (frame + 1) % standFrame
     
-def runCha(): # 달릴때 오른쪽 함수
+def runCha(): # 달릴때 함수
     global frame,dirRL
 
     print("run")
@@ -72,7 +73,12 @@ def updownCha():
     global frame,dirUD
 
     print("위아래")
-    #내용추가
+
+    if (dirUD == 1):
+        character = load_image('jmRmiku.png')
+        character.clip_draw(frame * 79, 0, 79, 101, x, y, 120, 140)
+
+    frame = (frame + 1) % jmFrame
 
 while running:
     clear_canvas()
@@ -106,6 +112,7 @@ while running:
     handle_events()
 
     x += dirRL*15
+    y+=dirUD*10
     delay(0.03)
 
 close_canvas()
