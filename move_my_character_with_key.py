@@ -46,8 +46,8 @@ def handle_events():
 
 running = True
 
-x = 80
-y = 500
+x = 180
+y = 50
 frame = 0
 dirRL = 0
 dirUD = 0
@@ -84,20 +84,29 @@ def runCha(): # 달릴때 함수
     frame = (frame + 1) % runFrame
 
 def updownCha():
-    global frame,dirUD
+    global frame,dirUD,Right,Left
     tempWidth = 0
     print("위아래")
 
     if (dirUD == 1):
-        character = load_image('jmRmiku.png')
-        character.clip_draw(frame * 78, 0, 78, 101, x, y, 120, 140)
+        if(Right):
+            character = load_image('jmRmiku.png')
+            character.clip_draw(frame * 78, 0, 78, 101, x, y, 125, 145)
+        elif(Left):
+            character = load_image('jmLmiku.png')
+            if (frame > 5): # frame 5 부터는 그림 가로 길이가 조금 더 짧아져서 프레임에 맞게...
+                tempWidth = -4
+            else:
+                tempWidth = 0
+            character.clip_draw((frame * 82)+tempWidth, 0, 82 + tempWidth, 101, x, y, 125, 145)
         frame = (frame + 1) % jmFrame
+
     elif(dirUD== -1):
         character = load_image('downRMiku.png')
         if(frame > 2):
             tempWidth = 3 # frame 3부터는 그림 가로 길이가 조금 더 길어져서 프레임에 맞게...
         else: tempWidth = 0
-        character.clip_draw((frame * 84) + tempWidth, 0, 84 + tempWidth, 67, x, y, 122, 105)
+        character.clip_draw((frame * 84) + tempWidth, 0, 84 + tempWidth, 67, x, y, 124, 105)
 
         frame = (frame + 1) % downFrame
 
@@ -105,9 +114,6 @@ def updownCha():
 while running:
     clear_canvas()
     ground.draw(400,300,800,600)
-    
-    print("UPDOWN 확인:",dirUD)
-    print("RIGHTLEFT 확인:", dirRL)
 
     # 가만히 서있을 때
     if(dirUD == 0 and dirRL == 0):
@@ -129,8 +135,8 @@ while running:
 
     x += dirRL*15
     y += dirUD*8
-    if(x>780 or x < 0 or y > 580 or y< 0):
+    if(x > 780 or x < 0 or y > 650 or y< 0):
         running = False
-    delay(0.03)
+    delay(0.04)
 
 close_canvas()
