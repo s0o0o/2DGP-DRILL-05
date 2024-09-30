@@ -68,6 +68,12 @@ def runCha(): # 달릴때 오른쪽 함수
 
     frame = (frame + 1) % runFrame
 
+def updownCha():
+    global frame,dirUD
+
+    print("위아래")
+    #내용추가
+
 while running:
     clear_canvas()
     ground.draw(400,300,800,600)
@@ -87,9 +93,13 @@ while running:
     # ~~
 
     # 아래로 갈 때
+    elif(dirUD==1):
+        updownCha()
     # ~~
 
     # 위로 갈 때
+    elif (dirUD == -1):
+        updownCha()
     # ~~
 
     update_canvas()
