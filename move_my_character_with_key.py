@@ -42,15 +42,18 @@ def handle_events():
                 dirUD =0
             elif event.key == SDLK_DOWN:
                 dirUD =0
+            frame = 0
 
 
 running = True
 
 x = 180
-y = 50
+y = 500
 frame = 0
 dirRL = 0
 dirUD = 0
+
+tempWidth = 0
 
 standFrame = 20
 runFrame = 8
@@ -84,8 +87,8 @@ def runCha(): # 달릴때 함수
     frame = (frame + 1) % runFrame
 
 def updownCha():
-    global frame,dirUD,Right,Left
-    tempWidth = 0
+    global frame,dirUD,Right,Left,tempWidth
+
     print("위아래")
 
     if (dirUD == 1):
@@ -102,11 +105,23 @@ def updownCha():
         frame = (frame + 1) % jmFrame
 
     elif(dirUD== -1):
-        character = load_image('downRMiku.png')
-        if(frame > 2):
-            tempWidth = 3 # frame 3부터는 그림 가로 길이가 조금 더 길어져서 프레임에 맞게...
-        else: tempWidth = 0
-        character.clip_draw((frame * 84) + tempWidth, 0, 84 + tempWidth, 67, x, y, 124, 105)
+        if(Right):
+            print(frame, tempWidth)
+            character = load_image('downRMiku.png')
+            if(frame > 2):
+                tempWidth = 3 # frame 3부터는 그림 가로 길이가 조금 더 길어져서 프레임에 맞게...
+            else: tempWidth = 0
+            character.clip_draw((frame * 84) + tempWidth, 0, 84 + tempWidth, 67, x, y, 124, 105)
+        if(Left):
+            print(frame, tempWidth)
+            #frame = 6
+            print((frame * 79) + tempWidth, 79 + tempWidth)
+            character = load_image('downLMiku.png')
+            if (frame > 2):
+                tempWidth = 6  # frame 2부터는 그림 가로 길이가 조금 더 길어져서 프레임에 맞게...
+            else:
+                tempWidth = 0
+            character.clip_draw((frame * 79) + tempWidth, 0, 79 + tempWidth, 67, x, y, 125, 105)
 
         frame = (frame + 1) % downFrame
 
@@ -137,6 +152,6 @@ while running:
     y += dirUD*8
     if(x > 780 or x < 0 or y > 650 or y< 0):
         running = False
-    delay(0.04)
+    delay(0.05)
 
 close_canvas()
