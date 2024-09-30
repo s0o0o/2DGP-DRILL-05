@@ -1,6 +1,4 @@
 from pico2d import *
-from pygame.examples.scroll import DIR_UP
-from pygame.examples.sprite_texture import event
 
 open_canvas()
 ground = load_image('TUK_GROUND.png')
